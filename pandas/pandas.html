@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html>
+    <head>
+        <!-- Recommended meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/snapshots/2023.11.1.RC3/core.css">
+        <!-- CSS for examples -->
+        <link rel="stylesheet" href="../assets/css/examples.css" />
+
+        <!-- This script tag bootstraps PyScript -->
+        <script type="module" src="https://pyscript.net/snapshots/2023.11.1.RC3/core.js"></script>
+
+        <!-- will be set via PyDom -->
+        <title id="header-title"></title>
+        <link rel="icon" type="image/png" href="../assets/favicon.png" />
+    </head>
+
+    <body>
+        <nav class="navbar" style="background-color: #000000">
+            <div class="app-header">
+                <a href="/">
+                    <img src="../assets/logo.png" class="logo" />
+                </a>
+
+                <!-- will be set via PyDom -->
+                <a class="title" id="page-title" href="" style="color: #f0ab3c"></a>
+            </div>
+        </nav>
+
+        <br />
+        
+        <!-- will be set via PyDom -->
+        <div id="page-message"></div>
+
+        <div id="pandas-source">
+            <h3>Data Source</h3>
+            <input type="text" id="txt-url" class="py-input" size="70" />
+            <button
+                type="submit"
+                id="btn-load"
+                class="py-button"
+                py-click="loadFromURL"
+            >
+                Load CSV
+            </button>
+        </div>
+
+        <!--
+        TODO: REPL here to manipulate dataframe is
+        not possible because PyScript next doesn't have
+        a py-repl tag + multiple terminals on one page are
+        not supported yet
+        -->
+
+        <!-- <div id="pandas-repl" hidden>
+            <h3>Python REPL</h3>
+            <script type="py" terminal worker target="pandas-output-inner">
+                # Hit SHIFT + ENTER to execute example code
+                # Get all closed airports in Great Britain
+                df2 = df.query("type == 'closed' & iso_country == 'GB'")
+                df2
+            </script>
+        </div> -->
+
+        <div id="pandas-output" hidden>
+            <h3>Output</h3>
+            <div id="pandas-output-inner"></div>
+        </div>
+
+        <div id="pandas-dev-console" hidden>
+            <h3>Dev Console</h3>
+            <script type="py" terminal></script>
+        </div>
+
+        <section class="pyscript">
+            <script type="py" src="./main.py" config="./pyscript.toml"></script>
+        </section>
+
+    </body>
+</html>
