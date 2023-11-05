@@ -1,0 +1,1 @@
+packages = ["pandas", "bokeh==3.2.2", "xyzservices"]
