@@ -1,0 +1,1 @@
+packages = ["altair", "pandas", "vega_datasets"]
