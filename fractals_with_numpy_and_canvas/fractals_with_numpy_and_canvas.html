@@ -1,0 +1,128 @@
+<!doctype html>
+
+<html>
+    <head>
+        <!-- Recommended meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/snapshots/2023.11.1.RC3/core.css">
+        <!-- CSS for examples -->
+        <link rel="stylesheet" href="../assets/css/examples.css" />
+
+        <!-- This script tag bootstraps PyScript -->
+        <script type="module" src="https://pyscript.net/snapshots/2023.11.1.RC3/core.js"></script>
+
+        <title>Fractals with NumPy and canvas</title>
+        <link rel="icon" type="image/png" href="../assets/favicon.png" />
+
+        <!-- style for spinner and canvas -->
+        <style>
+            .loading {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top-color: black;
+                animation: spin 1s ease-in-out infinite;
+            }
+
+            canvas {
+                display: none;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <nav class="navbar" style="background-color: #000000">
+            <div class="app-header">
+                <a href="/">
+                    <img src="../assets/logo.png" class="logo" />
+                </a>
+                <a class="title" href="" style="color: #f0ab3c">Fractals with NumPy and canvas</a>
+            </div>
+        </nav>
+
+        <section class="pyscript">
+            <div style="display: flex; flex-direction: column; gap: 1em; width: 600px;">
+
+                <div id="mandelbrot">
+                    <div style="text-align: center">Mandelbrot set</div>
+                    <div>
+                        <div class="loading"></div>
+                        <canvas></canvas>
+                    </div>
+                </div>
+
+                <div id="julia">
+                    <div style="text-align: center">Julia set</div>
+                    <div>
+                        <div class="loading"></div>
+                        <canvas></canvas>
+                    </div>
+                </div>
+
+                <div id="newton">
+                    <h3>Play with the below parameters to re-render the Newton Set</h3>
+                    <div style="text-align: center">Newton set</div>
+                    <fieldset style="display: flex; flex-direction: row; gap: 1em">
+                        <div>
+                            <span style="white-space: pre">p(z) = </span>
+                            <input id="poly" type="text" value="z**3 - 2*z + 2"/>
+                        </div>
+                        <div>
+                            <span style="white-space: pre">a = </span>
+                            <input id="coef" type="text" value="1" style="width: 40px"/>
+                        </div>
+                        <div style="display: flex; flex-direction: row">
+                            <span style="white-space: pre">x = [</span>
+                            <input id="x0" type="text" value="-2.5" style="width: 80px; text-align: right"/>
+
+                            <span style="white-space: pre">, </span>
+                            <input id="x1" type="text" value="2.5" style="width: 80px; text-align: right"/>
+
+                            <span style="white-space: pre">]</span>
+                        </div>
+                        <div style="display: flex; flex-direction: row">
+                            <span style="white-space: pre">y = [</span>
+                            <input id="y0" type="text" value="-5.0" style="width: 80px; text-align: right"/>
+
+                            <span style="white-space: pre">, </span>
+                            <input id="y1" type="text" value="5.0" style="width: 80px; text-align: right"/>
+
+                            <span style="white-space: pre">]</span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; gap: 1em">
+                            <div style="white-space: pre">
+                                <input type="radio" id="conv" name="type" value="convergence" checked/>
+                                convergence
+                            </div>
+                            <div style="white-space: pre">
+                                <input type="radio" id="iter" name="type" value="iterations" />
+                                iterations
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div>
+                        <div class="loading"></div>
+                        <canvas></canvas>
+                    </div>
+
+                </div>
+            </div>
+
+            <script type="py" src="./main.py" config="./pyscript.toml"></script>
+        </section>
+
+    </body>
+
+</html>

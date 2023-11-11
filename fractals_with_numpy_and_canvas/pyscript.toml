@@ -1,0 +1,5 @@
+packages = ["numpy", "sympy"]
+
+[files]
+"./palettes.py" = ""
+"./fractals.py" = ""
