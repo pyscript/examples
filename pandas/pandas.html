@@ -49,23 +49,6 @@
             </button>
         </div>
 
-        <!--
-        TODO: REPL here to manipulate dataframe is
-        not possible because PyScript next doesn't have
-        a py-repl tag + multiple terminals on one page are
-        not supported yet
-        -->
-
-        <!-- <div id="pandas-repl" hidden>
-            <h3>Python REPL</h3>
-            <script type="py" terminal worker target="pandas-output-inner">
-                # Hit SHIFT + ENTER to execute example code
-                # Get all closed airports in Great Britain
-                df2 = df.query("type == 'closed' & iso_country == 'GB'")
-                df2
-            </script>
-        </div> -->
-
         <div id="pandas-output" hidden>
             <h3>Output</h3>
             <div id="pandas-output-inner"></div>

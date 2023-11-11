@@ -26,7 +26,6 @@ def loadFromURL(event):
     log(f"Trying to fetch CSV from {url}")
     df = pd.read_csv(open_url(url))
 
-    # TODO: pydom["div#pandas-repl"].style["display"] = "block"
     pydom["div#pandas-output"].style["display"] = "block"
     pydom["div#pandas-dev-console"].style["display"] = "block"
 
