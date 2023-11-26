@@ -1,0 +1,1 @@
+packages = ["panel", "bokeh==3.2.2"]
