@@ -3,7 +3,7 @@ body {
 }
 
 .pyscript {
-    margin: 0.5rem;
+    height: 100%;
 }
 
 html {
@@ -55,4 +55,12 @@ nav {
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
+}
+
+#sidebar {
+    width: 350px;
+}
+
+#plot {
+    height: 100%;
 }
