@@ -1,1 +1,2 @@
+name = "NYC Taxi Panel DeckGL"
 packages = ["bokeh==3.2.2", "numpy", "pandas", "panel"]

@@ -1,1 +1,2 @@
+name = "Altair"
 packages = ["altair", "pandas", "vega_datasets"]

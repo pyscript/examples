@@ -1,1 +1,2 @@
+name = "KMeans in Panel"
 packages = ["bokeh==3.2.2", "altair", "numpy", "pandas", "scikit-learn", "panel"]

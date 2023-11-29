@@ -1,1 +1,2 @@
+name = "Matplotlib"
 packages = ["matplotlib"]

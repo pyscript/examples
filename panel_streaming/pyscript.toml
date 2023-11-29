@@ -1,1 +1,2 @@
+name = "Streaming in Panel"
 packages = ["bokeh==3.2.2", "numpy", "pandas", "panel"]

@@ -1,3 +1,4 @@
+name = "Fractals with Numpy and Canvas"
 packages = ["numpy", "sympy"]
 
 [files]
