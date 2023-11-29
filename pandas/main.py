@@ -11,7 +11,7 @@ url = "https://raw.githubusercontent.com/datasets/airport-codes/master/data/airp
 pydom["title#header-title"].html = title
 pydom["a#page-title"].html = title
 pydom["div#page-message"].html = page_message
-pydom["input#txt-url"][0]._js.value = url
+pydom["input#txt-url"][0].value = url
 
 def log(message):
     # log to pandas dev console
@@ -21,7 +21,7 @@ def log(message):
 
 def loadFromURL(event):
     pydom["div#pandas-output-inner"].html = ""
-    url = pydom["input#txt-url"][0]._js.value
+    url = pydom["input#txt-url"][0].value
 
     log(f"Trying to fetch CSV from {url}")
     df = pd.read_csv(open_url(url))

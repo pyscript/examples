@@ -90,8 +90,8 @@ def ranges():
     y0_in = pydom["#y0"][0]
     y1_in = pydom["#y1"][0]
 
-    xr = (float(x0_in._js.value), float(x1_in._js.value))
-    yr = (float(y0_in._js.value), float(y1_in._js.value))
+    xr = (float(x0_in.value), float(x1_in.value))
+    yr = (float(y0_in.value), float(y1_in.value))
 
     return xr, yr
 
@@ -114,11 +114,11 @@ async def draw_newton(width, height) -> None:
 
     xr, yr = ranges()
 
-    expr = sympy.parse_expr(poly_in._js.value)
+    expr = sympy.parse_expr(poly_in.value)
     coeffs = [ complex(c) for c in reversed(sympy.Poly(expr, sympy.Symbol("z")).all_coeffs()) ]
     poly = np.polynomial.Polynomial(coeffs)
 
-    coef = complex(sympy.parse_expr(coef_in._js.value))
+    coef = complex(sympy.parse_expr(coef_in.value))
 
     console.time("newton")
     iters, roots = newton(width, height, p=poly, a=coef, xr=xr, yr=yr)
@@ -185,10 +185,10 @@ async def mousemove(event):
             y0 = invert(init_sy, yr, (0, height))
             y1 = invert(sy, yr, (0, height))
 
-            pydom["#x0"][0]._js.value = x0
-            pydom["#x1"][0]._js.value = x1
-            pydom["#y0"][0]._js.value = y0
-            pydom["#y1"][0]._js.value = y1
+            pydom["#x0"][0].value = x0
+            pydom["#x1"][0].value = x1
+            pydom["#y0"][0].value = y0
+            pydom["#y1"][0].value = y1
 
             is_selecting = False
             init_sx, init_sy = None, None
