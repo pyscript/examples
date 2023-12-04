@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 
 from pyscript import document
-
+from pyweb import pydom
 tasks = []
 
 
@@ -10,9 +10,12 @@ def q(selector, root=document):
 
 
 # define the task template that will be use to render new templates to the page
-task_template = q("#task-template").content.querySelector(".task")
-task_list = q("#list-tasks-container")
-new_task_content = q("#new-task-content")
+# Note: We use JS element here because pydom doesn't fully support template 
+#       elements now
+task_template = pydom.Element(q("#task-template").content.querySelector(".task"))
+
+task_list = pydom["#list-tasks-container"][0]
+new_task_content = pydom["#new-task-content"][0]
 
 
 def add_task(e):
@@ -33,11 +36,12 @@ def add_task(e):
 
     # add the task element to the page as new node in the list by cloning from a
     # template
-    task_html = task_template.cloneNode(True)
+    task_html = task_template.clone()
     task_html.id = task_id
-    task_html_check = q("input", root=task_html)
-    task_html_content = q("p", root=task_html)
-    task_html_content.textContent = task["content"]
+
+    task_html_check = task_html.find("input")[0]
+    task_html_content = task_html.find("p")[0]
+    task_html_content._js.textContent = task["content"]
     task_list.append(task_html)
 
     def check_task(evt=None):
@@ -45,7 +49,7 @@ def add_task(e):
         task_html_content.classList.toggle("line-through", task["done"])
 
     new_task_content.value = ""
-    task_html_check.onclick = check_task
+    task_html_check._js.onclick = check_task
 
 
 def add_task_event(e):
