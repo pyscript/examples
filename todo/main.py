@@ -46,7 +46,7 @@ def add_task(e):
 
     def check_task(evt=None):
         task["done"] = not task["done"]
-        task_html_content.classList.toggle("line-through", task["done"])
+        task_html_content._js.classList.toggle("line-through", task["done"])
 
     new_task_content.value = ""
     task_html_check._js.onclick = check_task
