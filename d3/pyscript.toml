@@ -1,0 +1,4 @@
+name = "Simple Clock"
+
+[[fetch]]
+files = ["./d3.py"]
