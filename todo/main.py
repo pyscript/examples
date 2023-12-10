@@ -2,12 +2,11 @@ from datetime import datetime as dt
 
 from pyscript import document
 from pyweb import pydom
-tasks = []
 
+tasks = []
 
 def q(selector, root=document):
     return root.querySelector(selector)
-
 
 # define the task template that will be use to render new templates to the page
 # Note: We use JS element here because pydom doesn't fully support template 

@@ -30,16 +30,15 @@
                 <a href="/">
                     <img src="./assets/logo.png" class="logo" />
                 </a>
-                <a class="title" href="" style="color: #f0ab3c">Simple Clock</a>
+                <a class="title" href="" style="color: #f0ab3c">Todo App</a>
             </div>
         </nav>
-
 
         <section class="pyscript">
             <main>
                 <section>
                     <div>
-                        <h1> To Do List </h1>
+                        <h1>To Do List</h1>
                     </div>
                     <div>
                         <input id="new-task-content" type="text" />
@@ -48,12 +47,11 @@
                         </button>
                     </div>
 
-                    <py-list id="myList"></py-list>
                     <div id="list-tasks-container"></div>
 
                     <template id="task-template">
                         <section class="task py-li-element">
-                            <label for="flex items-center p-2 ">
+                            <label class="flex items-center p-2">
                                 <input style="vertical-align: middle;" type="checkbox" />
                                 <p style="display: inline;"></p>
                             </label>
@@ -61,7 +59,8 @@
                     </template>
                 </section>
             </main>
-            <script type="py" src="./main.py" async></script>
+
+            <script type="py" src="./main.py" config="./pyscript.toml"></script>
         </section>
     </body>
 </html>
