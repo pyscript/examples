@@ -17,7 +17,7 @@ def log(message):
     # log to pandas dev console
     print(message)
     # log to JS console
-    console.log (message)
+    console.log(message)
 
 def loadFromURL(event):
     pydom["div#pandas-output-inner"].html = ""
