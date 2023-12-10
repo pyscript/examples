@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html>
+    <head>
+        <!-- Recommended meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.2/core.css">
+        <!-- CSS for examples -->
+        <link rel="stylesheet" href="./assets/css/examples.css" />
+
+        <!-- This script tag bootstraps PyScript -->
+        <script type="module" src="https://pyscript.net/releases/2023.11.2/core.js"></script>
+
+        <title>Todo App</title>
+        <link rel="icon" type="image/png" href="./assets/favicon.png" />
+
+        <style>
+            .line-through {
+                text-decoration: line-through;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar" style="background-color: #000000">
+            <div class="app-header">
+                <a href="/">
+                    <img src="./assets/logo.png" class="logo" />
+                </a>
+                <a class="title" href="" style="color: #f0ab3c">Todo App</a>
+            </div>
+        </nav>
+
+        <section class="pyscript">
+            <main>
+                <section>
+                    <div>
+                        <h1>To Do List</h1>
+                    </div>
+                    <div>
+                        <input id="new-task-content" type="text" />
+                        <button id="new-task-btn" type="submit" py-click="add_task">
+                            Add task
+                        </button>
+                    </div>
+
+                    <div id="list-tasks-container"></div>
+
+                    <template id="task-template">
+                        <section class="task py-li-element">
+                            <label class="flex items-center p-2">
+                                <input style="vertical-align: middle;" type="checkbox" />
+                                <p style="display: inline;"></p>
+                            </label>
+                        </section>
+                    </template>
+                </section>
+            </main>
+
+            <script type="py" src="./main.py" config="./pyscript.toml"></script>
+        </section>
+    </body>
+</html>
