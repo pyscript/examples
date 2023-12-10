@@ -1,0 +1,2 @@
+name = "PyScript Jokes"
+packages = ["pyjokes"]
