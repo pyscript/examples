@@ -1,7 +1,5 @@
-import js
+from js import d3
 from pyodide.ffi import create_proxy, to_js
-
-d3 = js.d3
 
 fruits = [
     {"name": "🍊", "count": 21},

@@ -1,4 +1,1 @@
 name = "Simple d3 visualization"
-
-[[fetch]]
-files = ["./d3.py"]
