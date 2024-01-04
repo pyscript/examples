@@ -1,0 +1,46 @@
+h1, h2 {
+    font-family: 'Indie Flower', 'Comic Sans', cursive;
+    text-align: center;
+}
+
+#board {
+    font-family: 'Indie Flower', 'Comic Sans', cursive;
+    position: relative;
+    font-size: 120px;
+    margin: 1% auto;
+    border-collapse: collapse;
+}
+#board td {
+    border: 4px solid rgb(60, 60, 60);
+    width: 90px;
+    height: 90px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+#board td div {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.x {
+    color: darksalmon;
+    position: relative;
+    font-size: 1.2em;
+    cursor: default;
+}
+.o {
+    color: aquamarine;
+    position: relative;
+    font-size: 1.0em;
+    cursor: default;
+}
+
+.win {
+    background-color: beige;
+}
