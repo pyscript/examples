@@ -14,9 +14,20 @@
     <script type="module" src="https://pyscript.net/releases/2024.2.1/core.js"></script>
 </head>
 <body>
-    <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
+    <script type="py" src="./main.py" config="./pyscript.toml" async></script>
 
     <button mpy-click="my_files.select_folder">Choose Folder</button>
     <button mpy-click="get_file">Get test.txt</button>
+
+    <label for="cars">Choose a device:</label>
+
+    <select name="devices" id="devices"></select>
+  
+    <button id="pick-device">Select the device</button>
+    <button id="snap">Snap</button>
+  
+    <div id="result"></div>
+  
+    <video id="video" width="600" height="400" autoplay></video>
 </body>
 </html>

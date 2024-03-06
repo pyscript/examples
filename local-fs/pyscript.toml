@@ -1,4 +1,4 @@
 name = "local_fs Copy"
 [[fetch]]
-files = [ "files.py",]
+files = [ "files.py", "media.py"]
 
