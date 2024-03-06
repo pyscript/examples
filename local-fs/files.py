@@ -11,3 +11,12 @@ class Files:
         file = await self.folder.getFileHandle(file_name)
         file_data = await file.getFile()
         return await file_data.text()
+
+    async def create_new_file(self, contents):
+        file = await window.showSaveFilePicker()
+        await self.write_file(file, contents)
+
+    async def write_file(self, file, contents):
+        writeable = await file.createWritable()
+        await writeable.write(contents)
+        await writeable.close()
