@@ -1,1 +1,2 @@
 name = "D3 Visualization"
+description = "A simple application that uses D3 to plot a graph both in Javascript and Pyscript."

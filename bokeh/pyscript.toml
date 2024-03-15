@@ -1,2 +1,3 @@
 name = "Bokeh"
+description = "Simple application that uses Pandas and Bokeh to plot a graph."
 packages = ["pandas", "bokeh==3.2.2", "xyzservices"]

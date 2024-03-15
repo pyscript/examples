@@ -1,2 +1,3 @@
 name = "PyScript Jokes"
+description = "A simple application showing how to install and use a package in PyScript."
 packages = ["pyjokes"]

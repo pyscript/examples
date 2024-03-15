@@ -1,2 +1,3 @@
 name = "Pandas"
+description = "A simple application that loads a csv and displays a table of its contents."
 packages = ["pandas"]
