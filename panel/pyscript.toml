@@ -1,2 +1,3 @@
 name = "Simple Panel"
+description = "A basic Panel application to be used with PyScript."
 packages = ["panel", "bokeh==3.2.2"]
