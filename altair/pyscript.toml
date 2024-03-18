@@ -1,3 +1,3 @@
 name = "Altair"
-description = "An application that uses vega datasets and Vega to plot heatmap and bar graphs.
+description = "An application that uses vega datasets and Vega to plot heatmap and bar graphs."
 packages = ["altair", "pandas", "vega_datasets"]
