@@ -1,4 +1,4 @@
-# Simple Panel Example
+# Simple Panel Editor Example
 
 This is a basic example of an editable [Panel](https://panel.holoviz.org/) application with PyScript. This example is aimed for you to get up and running with Panel and the PyScript editor so you can extend it to your own needs.
 
