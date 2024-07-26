@@ -1,14 +1,14 @@
 # Panel KMeans Examples
 
-This application provides an example of **building a simple dashboard using Panel**.
+This application provides an example of **building a simple dashboard using [Panel](https://panel.holoviz.org/)**.
 
-It demonstrates how to take the output of **k-means
-clustering on the Penguins dataset** using scikit-learn,
-parameterizing the number of clusters and the variables to
-plot.
+It demonstrates how to take the output of **k-means clustering on the Penguins dataset** using scikit-learn,
+parameterizing the number of clusters and the variables to plot.
 
 The plot and the table are linked, i.e. selecting on the plot
 will filter the data in the table. The **`x` marks the center** of the cluster.
+
+Check out the [Panel and Vega/ Altair](https://panel.holoviz.org/reference/panes/Vega.html) reference guide for more information.
 
 ## Libraries Used
 
