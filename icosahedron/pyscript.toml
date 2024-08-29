@@ -1,2 +1,5 @@
 name = "WebGL Icosahedron"
 description = "An example how to use Three.js and WebGL to render an Icosahedron in PyScript."
+
+[js_modules.main]
+"https://esm.run/three" = "THREE"
