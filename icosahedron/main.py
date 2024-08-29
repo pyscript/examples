@@ -1,6 +1,7 @@
-from pyodide.ffi import to_js
+from pyscript.ffi import to_js
+from pyscript.js_modules import THREE
 from pyscript import when, window, document
-from js import Math, THREE, performance, Object
+from js import Math, performance
 import asyncio
 
 mouse = THREE.Vector2.new()
@@ -42,11 +43,9 @@ def mathRandom(num = 1):
 particularGroup =  THREE.Object3D.new()
 modularGroup =  THREE.Object3D.new()
 
-perms = {"flatShading":True, "color":"#111111", "transparent":False, "opacity":1, "wireframe":False}
-perms = Object.fromEntries(to_js(perms))
+perms = to_js({"flatShading":True, "color":"#111111", "transparent":False, "opacity":1, "wireframe":False})
 
-particle_perms = {"color":"#FFFFFF", "side":THREE.DoubleSide}
-particle_perms = Object.fromEntries(to_js(particle_perms))
+particle_perms = to_js({"color":"#FFFFFF", "side":THREE.DoubleSide})
 
 def create_cubes(mathRandom, modularGroup):
     i = 0
@@ -108,11 +107,12 @@ lightBack = THREE.PointLight.new(0x0FFFFF, 1)
 lightBack.position.set(0, -3, -1)
 
 scene.add(sceneGroup)
-scene.add(light)
-scene.add(lightBack)
+#scene.add(light)
+#scene.add(lightBack)
+#scene.add(ambientLight)
 
-rectSize = 2
-intensity = 14
+rectSize = 3
+intensity = 44
 rectLight = THREE.RectAreaLight.new( 0x0FFFFF, intensity,  rectSize, rectSize )
 rectLight.position.set( 0, 0, 1 )
 rectLight.lookAt( 0, 0, 0 )
@@ -155,4 +155,4 @@ async def main():
         renderer.render( scene, camera )
         await asyncio.sleep(0.02)
 
-asyncio.ensure_future(main())
+main()
