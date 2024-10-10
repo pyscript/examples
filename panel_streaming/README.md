@@ -1,6 +1,6 @@
 # Panel Streaming Example
 
-This application provides an example of how to handle streaming data and display it in a Panel application.
+This application provides an example of how to handle streaming data and display it in a [Panel](https://panel.holoviz.org/) application.
 
 ## Libraries Used
 
