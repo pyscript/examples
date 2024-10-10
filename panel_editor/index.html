@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html>
+    <head>
+        <!-- Recommended meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.8.1/core.css">
+        <!-- CSS for examples -->
+        <link rel="stylesheet" href="./assets/css/examples.css" />
+
+        <!-- This script tag bootstraps PyScript -->
+        <script type="module" src="https://pyscript.net/releases/2024.8.1/core.js"></script>
+
+        <!-- for splashscreen -->
+        <style>
+            #loading { outline: none; border: none; background: transparent }
+        </style>
+        <title>Panel Example</title>
+        <link rel="icon" type="image/png" href="./assets/favicon.png" />
+
+        <!-- bokeh scripts -->
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.5.0.js"></script>
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.5.0.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.5.0.min.js"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+
+        <!-- panel scripts -->
+        <script defer src="https://cdn.jsdelivr.net/npm/@holoviz/panel@1.5.0-b.2/dist/panel.min.js"></script>
+    </head>
+
+    <body>
+        <nav class="navbar" style="background-color: #000000">
+            <div class="app-header">
+                <a href="/">
+                    <img src="./assets/logo.png" class="logo" />
+                </a>
+                <a class="title" href="" style="color: #f0ab3c">Panel Pyscript Editor Example</a>
+            </div>
+        </nav>
+
+        <script type="py-editor" config="./pyscript.toml">
+            import panel as pn
+
+            pn.extension()
+
+            slider = pn.widgets.FloatSlider(start=0, end=10, name="Amplitude")
+
+
+            def callback(new):
+                return f"Amplitude is: {new}"
+
+
+            pn.Row(slider, pn.bind(callback, slider)).servable(target="simple_app")
+        </script>
+        <div id="simple_app"></div>
+    </body>
+
+</html>
