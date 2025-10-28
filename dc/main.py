@@ -3,7 +3,7 @@ from math import floor, isnan
 
 import js
 import pandas as pd
-from pyodide.ffi import create_proxy, to_js
+from pyodide.ffi import to_js
 from pyscript.js_modules import d3, dc
 from pyscript.js_modules.crossfilter import default as crossfilter
 
@@ -191,7 +191,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .radius(80)
     .dimension(gainOrLoss)
     .group(gainOrLossGroup)
-    .label(create_proxy(gainOrLossLabel))
+    .label(to_js(gainOrLossLabel))
 )
 (
     js.quarterChart
@@ -225,7 +225,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .elasticY(True)
     .centerBar(True)
     .gap(1)
-    .round(floor)
+    .round(to_js(floor))
     .alwaysUseRounding(True)
     .x(d3.scaleLinear().domain([-25, 25]))
     .renderHorizontalGridLines(True)
