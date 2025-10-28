@@ -84,15 +84,15 @@ def moveTitle(d, _):
 
 # export globally for href="javascript:..." callbacks
 js.dc = dc
-js.gainOrLossChart = dc.PieChart.new("#gain-loss-chart")
-js.fluctuationChart = dc.BarChart.new("#fluctuation-chart")
-js.quarterChart = dc.PieChart.new("#quarter-chart")
-js.dayOfWeekChart = dc.RowChart.new("#day-of-week-chart")
-js.moveChart = dc.LineChart.new("#monthly-move-chart")
-js.volumeChart = dc.BarChart.new("#monthly-volume-chart")
-js.yearlyBubbleChart = dc.BubbleChart.new("#yearly-bubble-chart")
-js.nasdaqCount = dc.DataCount.new(".dc-data-count")
-js.nasdaqTable = dc.DataTable.new(".dc-data-table")
+js.gainOrLossChart = dc.pieChart("#gain-loss-chart")
+js.fluctuationChart = dc.barChart("#fluctuation-chart")
+js.quarterChart = dc.pieChart("#quarter-chart")
+js.dayOfWeekChart = dc.rowChart("#day-of-week-chart")
+js.moveChart = dc.lineChart("#monthly-move-chart")
+js.volumeChart = dc.barChart("#monthly-volume-chart")
+js.yearlyBubbleChart = dc.bubbleChart("#yearly-bubble-chart")
+js.nasdaqCount = dc.dataCount(".dc-data-count")
+js.nasdaqTable = dc.dataTable(".dc-data-table")
 
 numberFormat = ".2f"
 dateFormatSpecifier = "%m/%d/%Y"
@@ -252,7 +252,7 @@ js.fluctuationChart.yAxis().ticks(5)
     .xUnits(d3.timeMonths)
     .elasticY(True)
     .renderHorizontalGridLines(True)
-    .legend(dc.Legend.new().x(800).y(10).itemHeight(13).gap(5))
+    .legend(dc.legend().x(800).y(10).itemHeight(13).gap(5))
     .brushOn(False)
     .group(indexAvgByMonthGroup, "Monthly Index Average")
     .valueAccessor(to_js(lambda d, _: d.value["avg"]))
