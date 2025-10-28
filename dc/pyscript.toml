@@ -9,13 +9,14 @@ packages = ["pandas"]
 
 # Fetch arbitrary content from URLs onto the virtual filesystem, just map a valid
 # URL to a destination in the filesystem path
-# [files]
-# "https://example.com/data.csv" = "./data.csv"
+[files]
+"https://raw.githubusercontent.com/dc-js/dc.js/refs/heads/develop/web-src/ndx.csv" = "./ndx.csv"
 
 # Import JavaScript modules in your project (load them in the main thread of the browser)
-# [js_modules.main]
-# "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet-src.esm.js" = "leaflet"
-# "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" = "leaflet" # CSS
+[js_modules.main]
+"https://esm.sh/d3@7.9.0" = "d3"
+"https://esm.sh/crossfilter2@1.5.4" = "crossfilter"
+"https://esm.sh/dc@4.2.7" = "dc"
 #
 # You can also import them in the worker thread of the browser
 # [js_modules.worker]

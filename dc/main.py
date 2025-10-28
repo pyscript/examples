@@ -1,11 +1,11 @@
 import datetime as dt
-import io
 from math import floor, isnan
 
 import js
 import pandas as pd
 from pyodide.ffi import create_proxy, to_js
-from pyodide.http import pyfetch
+from pyscript.js_modules import d3, dc
+from pyscript.js_modules.crossfilter import default as crossfilter
 
 
 def year_add(p, v, _nf):
@@ -82,25 +82,22 @@ def moveTitle(d, _):
     return f"{dateFormat(d.key)}\n{value:{numberFormat}}"
 
 
-js.gainOrLossChart = js.dc.PieChart.new("#gain-loss-chart")
-js.fluctuationChart = js.dc.BarChart.new("#fluctuation-chart")
-js.quarterChart = js.dc.PieChart.new("#quarter-chart")
-js.dayOfWeekChart = js.dc.RowChart.new("#day-of-week-chart")
-js.moveChart = js.dc.LineChart.new("#monthly-move-chart")
-js.volumeChart = js.dc.BarChart.new("#monthly-volume-chart")
-js.yearlyBubbleChart = js.dc.BubbleChart.new("#yearly-bubble-chart")
-js.nasdaqCount = js.dc.DataCount.new(".dc-data-count")
-js.nasdaqTable = js.dc.DataTable.new(".dc-data-table")
+# export globally for href="javascript:..." callbacks
+js.dc = dc
+js.gainOrLossChart = dc.PieChart.new("#gain-loss-chart")
+js.fluctuationChart = dc.BarChart.new("#fluctuation-chart")
+js.quarterChart = dc.PieChart.new("#quarter-chart")
+js.dayOfWeekChart = dc.RowChart.new("#day-of-week-chart")
+js.moveChart = dc.LineChart.new("#monthly-move-chart")
+js.volumeChart = dc.BarChart.new("#monthly-volume-chart")
+js.yearlyBubbleChart = dc.BubbleChart.new("#yearly-bubble-chart")
+js.nasdaqCount = dc.DataCount.new(".dc-data-count")
+js.nasdaqTable = dc.DataTable.new(".dc-data-table")
 
 numberFormat = ".2f"
 dateFormatSpecifier = "%m/%d/%Y"
-dateFormat = js.d3.timeFormat(dateFormatSpecifier)
-response = await pyfetch(
-    "https://raw.githubusercontent.com/dc-js/dc.js/refs/heads/develop/web-src/ndx.csv"
-)
-data = pd.read_csv(
-    io.StringIO(await response.text()), parse_dates=["date"], date_format=dateFormatSpecifier
-)
+dateFormat = d3.timeFormat(dateFormatSpecifier)
+data = pd.read_csv("./ndx.csv", parse_dates=["date"], date_format=dateFormatSpecifier)
 data["day"] = data["date"].dt.strftime("%a")
 data["month"] = data["date"].dt.to_period("M").dt.to_timestamp()
 data["quarter"] = data["date"].dt.quarter
@@ -113,7 +110,7 @@ def default_converter(value, _ignored1, _ignored2):
         return js.Date.new(value.year, value.month - 1, value.day)
     raise value
 
-ndx = js.crossfilter(to_js(data.to_dict(orient="records"), default_converter=default_converter))
+ndx = crossfilter(to_js(data.to_dict(orient="records"), default_converter=default_converter))
 all = ndx.groupAll()
 
 yearlyDimension = ndx.dimension("year")
@@ -152,16 +149,16 @@ dayOfWeekGroup = dayOfWeek.group()
     .margins(to_js({"top": 10, "right": 50, "bottom": 30, "left": 40}))
     .dimension(yearlyDimension)
     .group(yearlyPerformanceGroup)
-    .colors(js.d3.schemeRdYlGn[9])
+    .colors(d3.schemeRdYlGn[9])
     .colorDomain([-500, 500])
     .colorAccessor(to_js(lambda d, i: d.value["absGain"]))
     .keyAccessor(to_js(lambda d: d.value["absGain"]))
     .valueAccessor(to_js(lambda d: d.value["percentageGain"]))
     .radiusValueAccessor(to_js(lambda d: d.value["fluctuationPercentage"]))
     .maxBubbleRelativeSize(0.3)
-    .x(js.d3.scaleLinear().domain([-2500, 2500]))
-    .y(js.d3.scaleLinear().domain([-100, 100]))
-    .r(js.d3.scaleLinear().domain([0, 4000]))
+    .x(d3.scaleLinear().domain([-2500, 2500]))
+    .y(d3.scaleLinear().domain([-100, 100]))
+    .r(d3.scaleLinear().domain([0, 4000]))
     .elasticY(True)
     .elasticX(True)
     .yAxisPadding(100)
@@ -230,7 +227,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .gap(1)
     .round(floor)
     .alwaysUseRounding(True)
-    .x(js.d3.scaleLinear().domain([-25, 25]))
+    .x(d3.scaleLinear().domain([-25, 25]))
     .renderHorizontalGridLines(True)
     .filterPrinter(
         to_js(
@@ -250,12 +247,12 @@ js.fluctuationChart.yAxis().ticks(5)
     .dimension(moveMonths)
     .mouseZoomable(True)
     .rangeChart(js.volumeChart)
-    .x(js.d3.scaleTime().domain(to_js([dt.date(1985, 1, 1), dt.date(2012, 12, 31)], default_converter=default_converter)))
-    .round(js.d3.timeMonth.round)
-    .xUnits(js.d3.timeMonths)
+    .x(d3.scaleTime().domain(to_js([dt.date(1985, 1, 1), dt.date(2012, 12, 31)], default_converter=default_converter)))
+    .round(d3.timeMonth.round)
+    .xUnits(d3.timeMonths)
     .elasticY(True)
     .renderHorizontalGridLines(True)
-    .legend(js.dc.Legend.new().x(800).y(10).itemHeight(13).gap(5))
+    .legend(dc.Legend.new().x(800).y(10).itemHeight(13).gap(5))
     .brushOn(False)
     .group(indexAvgByMonthGroup, "Monthly Index Average")
     .valueAccessor(to_js(lambda d, _: d.value["avg"]))
@@ -271,10 +268,10 @@ js.fluctuationChart.yAxis().ticks(5)
     .group(volumeByMonthGroup)
     .centerBar(True)
     .gap(1)
-    .x(js.d3.scaleTime().domain(to_js([dt.date(1985, 1, 1), dt.date(2012, 12, 31)], default_converter=default_converter)))
-    .round(js.d3.timeMonth.round)
+    .x(d3.scaleTime().domain(to_js([dt.date(1985, 1, 1), dt.date(2012, 12, 31)], default_converter=default_converter)))
+    .round(d3.timeMonth.round)
     .alwaysUseRounding(True)
-    .xUnits(js.d3.timeMonths)
+    .xUnits(d3.timeMonths)
 )
 (
     js.nasdaqCount
@@ -304,10 +301,10 @@ js.fluctuationChart.yAxis().ticks(5)
         "volume",
     ]))
     .sortBy(to_js(lambda d: d.date))
-    .order(js.d3.ascending)
+    .order(d3.ascending)
     .on(
         "renderlet",
         to_js(lambda table: table.selectAll(".dc-table-group").classed("info", True)),
     )
 )
-js.dc.renderAll()
+dc.renderAll()
