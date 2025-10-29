@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>dc.js</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/css/bootstrap.min.css"
+        integrity="sha512-0FqGWe/fNk5iLY4ESgp8wuMkkjJXZQ33ZCM5BuIqVfmKHbEjzR2KPviMCGAKQ/B1Ogs/G1uOilNLiTKhr7NXkg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.7/style/dc.min.css"
+        integrity="sha512-t38Qn1jREPvzPvDLgIP2fjtOayaA1KKBuNpNj9BGgiMi+tGLOdvDB+aWLMe2BvokHg1OxRLQLE7qrlLo+A+MLA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.10.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2025.10.3/core.js"></script>
+    <style>
+        div.row {
+            margin-left: 0;
+        }
+
+        div.dc-chart {
+            float: left;
+        }
+
+        #monthly-volume-chart g.y {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Nasdaq 100 Index 1985/11/01-2012/06/29</h2>
+
+    <div class="row">
+        <div id="yearly-bubble-chart" class="dc-chart">
+            <strong>Yearly Performance</strong> (radius: fluctuation/index ratio, color: gain/loss)
+            <a class="reset" href="#" style="display: none;">reset</a>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="gain-loss-chart">
+            <strong>Days by Gain/Loss</strong>
+            <a class="reset" href="#" style="display: none;">reset</a>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="quarter-chart">
+            <strong>Quarters</strong>
+            <a class="reset" href="#" style="display: none;">reset</a>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="day-of-week-chart">
+            <strong>Day of Week</strong>
+            <a class="reset" href="#" style="display: none;">reset</a>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="fluctuation-chart">
+            <strong>Days by Fluctuation(%)</strong>
+            <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+            <a class="reset" href="#" style="display: none;">reset</a>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="monthly-move-chart">
+            <strong>Monthly Index Abs Move & Volume/500,000 Chart</strong>
+            <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+            <a class="reset" href="#" style="display: none;">reset</a>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="monthly-volume-chart">
+        </div>
+        <p class="muted pull-right" style="margin-right: 15px;">select a time range to zoom in</p>
+    </div>
+
+    <div class="row">
+        <div>
+            <div class="dc-data-count">
+                <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a
+                    href="#">Reset All</a>
+            </div>
+        </div>
+        <table class="table table-hover dc-data-table">
+        </table>
+    </div>
+    <script type="py" src="./main.py" config="./pyscript.toml"></script>
+</body>
+
+</html>
