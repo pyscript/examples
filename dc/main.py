@@ -110,7 +110,6 @@ for chart in [
     quarterChart,
     dayOfWeekChart,
     fluctuationChart,
-    moveChart,  #
 ]:
     chart.select("a").on("click", to_js(partial(filter_all, [chart])))
 moveChart.select("a").on("click", to_js(partial(filter_all, [moveChart, volumeChart])))
