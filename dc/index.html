@@ -17,9 +17,11 @@
         div.row {
             margin-left: 0;
         }
+
         div.dc-chart {
             float: left;
         }
+
         #monthly-volume-chart g.y {
             display: none;
         }
@@ -32,8 +34,7 @@
     <div class="row">
         <div id="yearly-bubble-chart" class="dc-chart">
             <strong>Yearly Performance</strong> (radius: fluctuation/index ratio, color: gain/loss)
-            <a class="reset" href="javascript:yearlyBubbleChart.filterAll();dc.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="#" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
@@ -42,23 +43,21 @@
     <div class="row">
         <div id="gain-loss-chart">
             <strong>Days by Gain/Loss</strong>
-            <a class="reset" href="javascript:gainOrLossChart.filterAll();dc.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="#" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
 
         <div id="quarter-chart">
             <strong>Quarters</strong>
-            <a class="reset" href="javascript:quarterChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+            <a class="reset" href="#" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
 
         <div id="day-of-week-chart">
             <strong>Day of Week</strong>
-            <a class="reset" href="javascript:dayOfWeekChart.filterAll();dc.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="#" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
@@ -66,8 +65,7 @@
         <div id="fluctuation-chart">
             <strong>Days by Fluctuation(%)</strong>
             <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-            <a class="reset" href="javascript:fluctuationChart.filterAll();dc.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="#" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
@@ -77,8 +75,7 @@
         <div id="monthly-move-chart">
             <strong>Monthly Index Abs Move & Volume/500,000 Chart</strong>
             <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-            <a class="reset" href="javascript:moveChart.filterAll();volumeChart.filterAll();dc.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="#" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
@@ -94,7 +91,7 @@
         <div>
             <div class="dc-data-count">
                 <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a
-                    href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+                    href="#">Reset All</a>
             </div>
         </div>
         <table class="table table-hover dc-data-table">

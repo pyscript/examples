@@ -1,4 +1,5 @@
 import datetime as dt
+from functools import partial
 from math import floor, isnan
 
 import js
@@ -66,7 +67,7 @@ def month_initialize():
 
 def gainOrLossLabel(d):
     label = d.key
-    if js.gainOrLossChart.hasFilter() and not js.gainOrLossChart.hasFilter(label):
+    if gainOrLossChart.hasFilter() and not gainOrLossChart.hasFilter(label):
         return f"{label}(0%)"
     total = all.value()
     if total:
@@ -82,17 +83,37 @@ def moveTitle(d, _):
     return f"{dateFormat(d.key)}\n{value:{numberFormat}}"
 
 
-# export globally for href="javascript:..." callbacks
-js.dc = dc
-js.gainOrLossChart = dc.pieChart("#gain-loss-chart")
-js.fluctuationChart = dc.barChart("#fluctuation-chart")
-js.quarterChart = dc.pieChart("#quarter-chart")
-js.dayOfWeekChart = dc.rowChart("#day-of-week-chart")
-js.moveChart = dc.lineChart("#monthly-move-chart")
-js.volumeChart = dc.barChart("#monthly-volume-chart")
-js.yearlyBubbleChart = dc.bubbleChart("#yearly-bubble-chart")
-js.nasdaqCount = dc.dataCount(".dc-data-count")
-js.nasdaqTable = dc.dataTable(".dc-data-table")
+def filter_all(charts, *_):
+    for chart in charts:
+        chart.filterAll()
+    dc.redrawAll()
+
+
+def reset_all(*_):
+    dc.filterAll()
+    dc.renderAll()
+
+
+gainOrLossChart = dc.pieChart("#gain-loss-chart")
+fluctuationChart = dc.barChart("#fluctuation-chart")
+quarterChart = dc.pieChart("#quarter-chart")
+dayOfWeekChart = dc.rowChart("#day-of-week-chart")
+moveChart = dc.lineChart("#monthly-move-chart")
+volumeChart = dc.barChart("#monthly-volume-chart")
+yearlyBubbleChart = dc.bubbleChart("#yearly-bubble-chart")
+nasdaqCount = dc.dataCount(".dc-data-count")
+nasdaqTable = dc.dataTable(".dc-data-table")
+
+for chart in [
+    yearlyBubbleChart,
+    gainOrLossChart,
+    quarterChart,
+    dayOfWeekChart,
+    fluctuationChart,
+    moveChart,  #
+]:
+    chart.select("a").on("click", to_js(partial(filter_all, [chart])))
+moveChart.select("a").on("click", to_js(partial(filter_all, [moveChart, volumeChart])))
 
 numberFormat = ".2f"
 dateFormatSpecifier = "%m/%d/%Y"
@@ -110,7 +131,10 @@ def default_converter(value, _ignored1, _ignored2):
         return js.Date.new(value.year, value.month - 1, value.day)
     raise value
 
-ndx = crossfilter(to_js(data.to_dict(orient="records"), default_converter=default_converter))
+
+ndx = crossfilter(
+    to_js(data.to_dict(orient="records"), default_converter=default_converter)
+)
 all = ndx.groupAll()
 
 yearlyDimension = ndx.dimension("year")
@@ -120,17 +144,13 @@ yearlyPerformanceGroup = yearlyDimension.group().reduce(
 
 dateDimension = ndx.dimension("date")
 moveMonths = ndx.dimension("month")
-monthlyMoveGroup = moveMonths.group().reduceSum(
-    to_js(lambda d: abs(d.close - d.open))
-)
+monthlyMoveGroup = moveMonths.group().reduceSum(to_js(lambda d: abs(d.close - d.open)))
 volumeByMonthGroup = moveMonths.group().reduceSum(to_js(lambda d: d.volume / 500000))
 indexAvgByMonthGroup = moveMonths.group().reduce(
     to_js(month_add), to_js(month_remove), to_js(month_initialize)
 )
 
-gainOrLoss = ndx.dimension(
-    to_js(lambda d, *_: "Loss" if d.open > d.close else "Gain")
-)
+gainOrLoss = ndx.dimension(to_js(lambda d, *_: "Loss" if d.open > d.close else "Gain"))
 gainOrLossGroup = gainOrLoss.group()
 fluctuation = ndx.dimension(
     to_js(lambda d, *_: round((d.close - d.open) / d.open * 100))
@@ -142,8 +162,7 @@ dayOfWeek = ndx.dimension("day")
 dayOfWeekGroup = dayOfWeek.group()
 
 (
-    js.yearlyBubbleChart
-    .width(990)
+    yearlyBubbleChart.width(990)
     .height(250)
     .transitionDuration(1500)
     .margins(to_js({"top": 10, "right": 50, "bottom": 30, "left": 40}))
@@ -186,7 +205,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .tickFormat(to_js(lambda v, *_: f"{v}%"))
 )
 (
-    js.gainOrLossChart.width(180)
+    gainOrLossChart.width(180)
     .height(180)
     .radius(80)
     .dimension(gainOrLoss)
@@ -194,8 +213,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .label(to_js(gainOrLossLabel))
 )
 (
-    js.quarterChart
-    .width(180)
+    quarterChart.width(180)
     .height(180)
     .radius(80)
     .innerRadius(30)
@@ -203,8 +221,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .group(quarterGroup)
 )
 (
-    js.dayOfWeekChart
-    .width(180)
+    dayOfWeekChart.width(180)
     .height(180)
     .margins(to_js({"top": 20, "left": 10, "right": 10, "bottom": 20}))
     .group(dayOfWeekGroup)
@@ -217,7 +234,7 @@ dayOfWeekGroup = dayOfWeek.group()
     .ticks(4)
 )
 (
-    js.fluctuationChart.width(420)
+    fluctuationChart.width(420)
     .height(180)
     .margins(to_js({"top": 10, "right": 50, "bottom": 30, "left": 40}))
     .dimension(fluctuation)
@@ -235,19 +252,25 @@ dayOfWeekGroup = dayOfWeek.group()
         )
     )
 )
-js.fluctuationChart.xAxis().tickFormat(to_js(lambda v, *_: f"{v}%"))
-js.fluctuationChart.yAxis().ticks(5)
+fluctuationChart.xAxis().tickFormat(to_js(lambda v, *_: f"{v}%"))
+fluctuationChart.yAxis().ticks(5)
 (
-    js.moveChart
-    .renderArea(True)
+    moveChart.renderArea(True)
     .width(990)
     .height(200)
     .transitionDuration(1000)
     .margins(to_js({"top": 30, "right": 50, "bottom": 25, "left": 40}))
     .dimension(moveMonths)
     .mouseZoomable(True)
-    .rangeChart(js.volumeChart)
-    .x(d3.scaleTime().domain(to_js([dt.date(1985, 1, 1), dt.date(2012, 12, 31)], default_converter=default_converter)))
+    .rangeChart(volumeChart)
+    .x(
+        d3.scaleTime().domain(
+            to_js(
+                [dt.date(1985, 1, 1), dt.date(2012, 12, 31)],
+                default_converter=default_converter,
+            )
+        )
+    )
     .round(d3.timeMonth.round)
     .xUnits(d3.timeMonths)
     .elasticY(True)
@@ -260,46 +283,62 @@ js.fluctuationChart.yAxis().ticks(5)
     .title(to_js(moveTitle))
 )
 (
-    js.volumeChart
-    .width(990)
+    volumeChart.width(990)
     .height(40)
     .margins(to_js({"top": 0, "right": 50, "bottom": 20, "left": 40}))
     .dimension(moveMonths)
     .group(volumeByMonthGroup)
     .centerBar(True)
     .gap(1)
-    .x(d3.scaleTime().domain(to_js([dt.date(1985, 1, 1), dt.date(2012, 12, 31)], default_converter=default_converter)))
+    .x(
+        d3.scaleTime().domain(
+            to_js(
+                [dt.date(1985, 1, 1), dt.date(2012, 12, 31)],
+                default_converter=default_converter,
+            )
+        )
+    )
     .round(d3.timeMonth.round)
     .alwaysUseRounding(True)
     .xUnits(d3.timeMonths)
 )
 (
-    js.nasdaqCount
-    .crossfilter(ndx)
+    nasdaqCount.crossfilter(ndx)
     .groupAll(all)
-    .html(to_js({
-        "some": r"<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records"
-        + " | <a href='javascript:dc.filterAll(); dc.renderAll();'>Reset All</a>",
-        "all": "All records selected. Please click on the graph to apply filters.",
-    }))
+    .html(
+        to_js(
+            {
+                "some": r"<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records"
+                + " | <a href='#'>Reset All</a>",
+                "all": "All records selected. Please click on the graph to apply filters.",
+            }
+        )
+    )
+    .on(
+        "renderlet",
+        to_js(lambda chart: chart.select("a").on("click", to_js(reset_all))),
+    )
 )
 (
-    js.nasdaqTable
-    .dimension(dateDimension)
+    nasdaqTable.dimension(dateDimension)
     .section(to_js(lambda d, *_: f"{d.date.getFullYear()}/{d.date.getMonth() + 1:02d}"))
     .size(10)
-    .columns(to_js([
-        {
-            "label": "Date",
-            "format": lambda d: dateFormat(d.date),
-        },
-        "open",
-        {
-            "label": "Change",
-            "format": lambda d: f"{d.close - d.open:{numberFormat}}",
-        },
-        "volume",
-    ]))
+    .columns(
+        to_js(
+            [
+                {
+                    "label": "Date",
+                    "format": lambda d: dateFormat(d.date),
+                },
+                "open",
+                {
+                    "label": "Change",
+                    "format": lambda d: f"{d.close - d.open:{numberFormat}}",
+                },
+                "volume",
+            ]
+        )
+    )
     .sortBy(to_js(lambda d: d.date))
     .order(d3.ascending)
     .on(
