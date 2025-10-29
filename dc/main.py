@@ -50,14 +50,14 @@ def year_initialize():
 def month_add(p, v, _nf):
     p["days"] += 1
     p["total"] += (v.open + v.close) / 2
-    p["avg"] += round(p["total"] / p["days"])
+    p["avg"] = round(p["total"] / p["days"])
     return p
 
 
 def month_remove(p, v, _nf):
     p["days"] -= 1
     p["total"] -= (v.open + v.close) / 2
-    p["avg"] -= round(p["total"] / p["days"]) if p["days"] else 0
+    p["avg"] = round(p["total"] / p["days"]) if p["days"] else 0
     return p
 
 
@@ -119,8 +119,8 @@ dateFormatSpecifier = "%m/%d/%Y"
 dateFormat = d3.timeFormat(dateFormatSpecifier)
 data = pd.read_csv("./ndx.csv", parse_dates=["date"], date_format=dateFormatSpecifier)
 data["day"] = data["date"].dt.strftime("%a")
-data["month"] = data["date"].dt.to_period("M").dt.to_timestamp()
-data["quarter"] = data["date"].dt.quarter
+data["month"] = data["date"].dt.to_period("M").dt.to_timestamp().dt.date
+data["quarter"] = data["date"].dt.quarter.map("Q{:d}".format)
 data["year"] = data["date"].dt.year
 data["date"] = data["date"].dt.date
 
