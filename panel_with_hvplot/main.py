@@ -1,12 +1,9 @@
 import hvplot.pandas
 import numpy as np
 from js import console
-from pyodide_http import patch_all
 
 import pandas as pd
 import panel as pn
-
-patch_all()
 
 pn.extension(design="material")
 
