@@ -1,0 +1,8 @@
+.description  {
+    font-size: 1.0rem;
+    font-style: light;
+    border: 2px dashed red;
+}
+#graphic {
+    border: 1px dashed #0d720d;
+}

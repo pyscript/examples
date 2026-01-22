@@ -1,0 +1,56 @@
+.description  {
+    font-size: 1.0rem;
+    font-style: light;
+    border: 2px dashed #e232ca;
+}
+.basetext {
+    font-size: 1.4rem;
+    padding: 3px;
+}
+.short {
+    width: 60px;
+    align-self: center;
+    padding: 3px;
+}
+#graphic {
+    border: 1px dashed #0d720d;
+}
+
+/* from Dimension_component's css file */
+.param  {
+    border: 3px dashed #1999b3;
+}
+.paramtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 1.4rem;
+    font-style: normal;
+    margin: 0px 0px 0px 8px;
+}
+.measure {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    height: 2.5rem;
+    width: 90px;
+    margin: 4px;
+    padding: 8px;
+    background-color: #fefdeb;
+    border-radius: 5px;
+    border: 0.5px solid black;
+}
+.short {
+    width: 60px;
+    background-color: #e2fde4;
+}
+.altlabel {
+    font-size: 0.9rem;
+}
+.noborder {
+    border: none;
+    background-color: #ffffff;
+}
+
+/* ltk overrides */
+.ltk-input {
+    font-size: 1.4rem;
+    padding: 3px;
+}

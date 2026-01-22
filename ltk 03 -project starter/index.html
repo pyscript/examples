@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Newtitle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- navbar styles preloader -->
+    <style>
+        :root { --loadbord: #00a2e8ff; --loadBG: #b3d8f4; --loadpale: #f0faff;
+              }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box; }
+        h3 { font-weight: 400; }
+        
+        #loading {
+          outline: 15px solid var(--loadpale); justify-content: center;
+          border: 3px solid var(--loadbord); border-radius: 15px;
+          background: transparent; }
+        .container {
+          display: flex;
+          align-items: center;
+          height: 60px;
+          overflow: hidden;
+          width: 100%;
+          padding: 0px 0px 8px 10px;
+          box-sizing: border-box; }
+        /* from https://whirl.netlify.app/ */
+        .arc:before {
+          -webkit-animation: spin 1.9s infinite linear;
+                  animation: spin 1.9s infinite linear;
+          border-radius: 100%;
+          border-top: 6px solid var(--loadbord);
+          content: '';
+          display: block;
+          height: 50px;
+          width: 50px; }
+        
+        .hidden { display: none; }
+        .loadslide { width: 120px; animation: slide 11s ease-in; }
+        @-webkit-keyframes spin {
+          to {
+            -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg); } }
+        @keyframes spin {
+          to {
+            -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg); } }
+        @keyframes slide {
+             from { transform: translateX(0%); }
+             to { transform: translateX(300%); }  }
+    </style>
+    <script type="module">
+        const interpreter = "mpy"; // pyodide mpy
+        //document.body.append(interpreter)  // clean all this away when finished
+        //
+        const loading = document.getElementById('loading');
+        if (interpreter === "pyodide") {
+            addEventListener('py:ready', () => loading.close());
+        } else {
+            addEventListener('mpy:ready', () => loading.close());
+        }
+        loading.showModal();
+    </script>
+
+    <!-- Import PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+
+    <!-- Import jQuery - used in ltk/jquery.py -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/jquery-ui.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/leader-line/1.0.3/leader-line.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.css"/>
+
+    </head>
+    <body>
+        <dialog id="loading">
+            <div class="container arc"></div>
+            <h3 style="display:inline;">Building:</h3>
+            <h1 style="display:inline;">Newtitle</h1>
+            <h3>Assembling bits and pieces...</h3>
+            <h3 class="loadslide">Almost there...</h3>
+        </dialog>
+
+        <!-- Choose interpreter: clean away unused when finished -->
+        <!-- pyodide
+        <script type="py" src="main.py" config="pyscript_py.toml" terminal></script> -->
+        <!-- micropython -->
+        <script type="mpy" src="./main.py" config="./pyscript_mpy.toml" terminal></script>
+        <link rel="stylesheet" href="./main.css"/>
+            
+    </body>
+</html>

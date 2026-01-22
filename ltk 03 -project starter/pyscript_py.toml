@@ -1,0 +1,9 @@
+name = "Newtitle"
+
+packages = [ "pyscript-ltk==0.2.30"]
+
+[files]
+"https://raw.githubusercontent.com/pyscript/ltk/main/ltk/ltk.js" = "ltk/ltk.js"
+"https://raw.githubusercontent.com/pyscript/ltk/main/ltk/ltk.css" = "ltk/ltk.css"
+
+"./svg.py" = ""
